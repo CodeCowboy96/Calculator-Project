@@ -12,6 +12,7 @@ let currentOperator = null;
 let shouldResetDisplay = false;
 
 const display = document.getElementById('display');
+    display.textContent = "0"
 const buttons = document.querySelectorAll('button');
 
 
@@ -43,6 +44,37 @@ function updateDisplay(value) {
       shouldResetDisplay = false;
     } else {
       display.textContent += value;
+    }
+  };
+
+  function setOperation(operator) {
+    firstNum = parseFloat(display.textContent);
+    currentOperator = operator;
+    shouldResetDisplay = true;
+  }
+
+  function calculateResult() {
+    if (currentOperator && firstNum !== null) {
+      secondNum = parseFloat(display.textContent);
+      display.textContent = operate(currentOperator, firstNum, secondNum);
+      firstNum = null; 
+    }
+  }
+
+  function clearCalculator() {
+    display.textContent = '0';
+    firstNum = null;
+    secondNum = null;
+    currentOperator = null;
+  }
+
+  function operate(operator, a, b) {
+    switch(operator) {
+      case '+': return add(a, b);
+      case '-': return subtract(a, b);
+      case '*': return multiply(a, b);
+      case '/': return divide(a, b);
+      default: return b;  // Fallback to current display value
     }
   }
 //2.create UI through java/css
