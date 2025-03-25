@@ -1,22 +1,52 @@
 //1.import logic for the 4 cardinal math expressions
+//Calculator Logic
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+const divide = (a, b) => b !== 0 ? a / b : "Error";
+
+
+let firstNum = null;
+let secondNum = null;
+let currentOperator = null;
+let shouldResetDisplay = false;
+
+const display = document.getElementById('display');
+const buttons = document.querySelectorAll('button');
+
+
+// Button click handler
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const buttonValue = button.textContent;
+      if (button.id === 'clear') {
+        clearCalculator();
+        return;
+      }
+  
+      if (button.id === 'equals') {
+        calculateResult();
+        return;
+      }
+
+      if (['add', 'subtract', 'multiply', 'divide'].includes(button.id)) {
+        setOperation(buttonValue);
+        return;
+      }
+      updateDisplay(buttonValue);
+    });
+});
+
+function updateDisplay(value) {
+    if (display.textContent === '0' || shouldResetDisplay) {
+      display.textContent = value;
+      shouldResetDisplay = false;
+    } else {
+      display.textContent += value;
+    }
+  }
 //2.create UI through java/css
     //should include clear button
     //don't let decimals roll over the display
 
 //Button Grid
-createInitialGrid();
-const resetButton = document.createElement("button") 
-resetButton.textContent = "Reset";
-resetButton.addEventListener("click", () => {
-    let userInput = prompt("Enter the number of squares per side for the new grid (max 100):");
-    
-    let number = parseInt(userInput);
-
-    if (isNaN(number) || number < 1 || number > 100) {
-        alert("Please enter a valid number between 1 and 100.");
-      } else {
-        console.log(`Resetting grid with ${number} squares per side.`);
-
-        resetGrid(number);
-      }
-  });
