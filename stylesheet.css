@@ -80,7 +80,20 @@ button.op {
     flex: auto;
 }
 
+#topButtons {
+    display: flex;
+    gap: 5px;
+}
+
 #clear {
     max-height: fit-content;
-    max-width: 100%;
+    max-width: 75%;
+}
+
+#backspace {
+max-width: 25%;
+display: flex;
+justify-content: center;
+align-items: center;
+/* align-self: flex-end; */
 }

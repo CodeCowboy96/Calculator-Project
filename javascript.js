@@ -1,6 +1,11 @@
+//Debug
+  //1. decimal functionality when starting secondNum with a decimal after first number has decimal
+  //2. when hitting the decimal button after a firstNum with no decimal and an operator 
+  //    the decimal appends to end of firstNum
+  
 //Additions to create
-    //1. Add a decimal button to allow for decimal operations
-        //make sure only one decimal allowed at a time
+    //1. Add a decimal button to allow for decimal operations\
+        //make sure only one decimal allowed at a time\
     //2. Add a backspace button 
     //3. Add keyboard support
 
@@ -26,7 +31,9 @@ const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', () => {
       const buttonValue = button.textContent;
+
       if (button.classList.contains('numberButtons') && justCalculated === true) {
+        display.textContent = '0';
         justCalculated = false;
       return;
       }
@@ -76,11 +83,11 @@ function updateDisplay(value) {
     
   }
 
-  function calculateResult(result) {
+  function calculateResult() {
     if (currentOperator && firstNum !== null) {
       secondNum = parseFloat(display.textContent);
-      display.textContent = operate(currentOperator, firstNum, secondNum);
-      // firstNum = null; 
+      const result = operate(currentOperator, firstNum, secondNum); 
+      display.textContent = result;
       document.getElementById('decimal').disabled = false;
       firstNum = result; 
       secondNum = null;
@@ -112,7 +119,7 @@ function updateDisplay(value) {
       document.getElementById('decimal').disabled = true;
     }
     else {
-      display.textContent += '.';
+      display.textContent = '.';
     }
   }
 
