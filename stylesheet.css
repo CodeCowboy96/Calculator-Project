@@ -83,8 +83,4 @@ button.op {
 #clear {
     max-height: fit-content;
     max-width: 100%;
-    /* align-self: center;
-    width: 50%;
-    margin-top: 10px;
-    padding: 10px; */
 }
