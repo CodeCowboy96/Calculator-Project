@@ -23,6 +23,8 @@ body {
     padding: 10px;
     margin-bottom: 10px;
     min-height: 20px;
+    display:flex;
+    justify-content: flex-end;
 }
 
 #buttonContainer {
@@ -33,25 +35,39 @@ body {
 
 #numbers-operators{
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
 }
 
 #numbers {
+    max-height: fit-content;
     display: flex;
+    flex: 1 0 30%;
     flex-wrap: wrap;
     justify-content: flex-start;
-    width: 75%;
+    max-width: 70%;
     gap: 5px;
     padding-right: 4px;
 }
 
 #operators {
+    max-height: 50%;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
     justify-content: flex-end;
-    width: 25%;
+    flex-direction: column;
+    width: 15%;
     gap: 5px;
+}
+
+#side {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    padding-left: 5px;
+    gap: 5px;
+}
+
+#decimal {
+    max-height: 23.5%;
 }
 
 button {
@@ -60,9 +76,15 @@ button {
     min-height: 10px;
 }
 
+button.op {
+    flex: auto;
+}
+
 #clear {
-    align-self: center;
+    max-height: fit-content;
+    max-width: 100%;
+    /* align-self: center;
     width: 50%;
     margin-top: 10px;
-    padding: 10px;
+    padding: 10px; */
 }
