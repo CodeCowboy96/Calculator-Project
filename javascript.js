@@ -1,12 +1,13 @@
 //Debug
-  //1. decimal functionality when starting secondNum with a decimal after first number has decimal
-  //2. when hitting the decimal button after a firstNum with no decimal and an operator 
-  //    the decimal appends to end of firstNum
+  //1. decimal functionality when starting secondNum with a decimal after first number has decimal\
+  //2. when hitting the decimal button after a firstNum with no decimal and an operator \
+  //    the decimal appends to end of firstNum\
   
 //Additions to create
     //1. Add a decimal button to allow for decimal operations\
         //make sure only one decimal allowed at a time\
-    //2. Add a backspace button 
+    //2. Add a backspace button\
+        //Add backspace button functionality
     //3. Add keyboard support
 
 
@@ -49,6 +50,7 @@ buttons.forEach(button => {
       }
 
       if (button.id === 'decimal') {
+        document.getElementById('decimal').disabled = true;
         handleDecimal();
         return;
       }
@@ -57,8 +59,8 @@ buttons.forEach(button => {
         if (currentOperator && firstNum !== null) { 
           calculateResult();
         } 
-          setOperation(buttonValue);
-          return;
+        setOperation(buttonValue);
+        return;
       }
       updateDisplay(buttonValue);
     });
@@ -70,7 +72,8 @@ function updateDisplay(value) {
     if (display.textContent === '0' || shouldResetDisplay) {
       display.textContent = value;
       shouldResetDisplay = false;
-    } else {
+    }
+     else {
       display.textContent += value;
     }
   };
@@ -80,7 +83,6 @@ function updateDisplay(value) {
     currentOperator = operator;
     shouldResetDisplay = true;
     document.getElementById('decimal').disabled = false;
-    
   }
 
   function calculateResult() {
@@ -115,11 +117,12 @@ function updateDisplay(value) {
   }
 
   function handleDecimal() {
-    if (display.textContent.includes('.')) {
-      document.getElementById('decimal').disabled = true;
+    if (shouldResetDisplay || display.textContent === '0') {
+      display.textContent = '0.';
+      shouldResetDisplay = false;
+    } else if (!display.textContent.includes('.')) {
+      display.textContent += '.';
     }
-    else {
-      display.textContent = '.';
-    }
+    justCalculated = false;
   }
 
