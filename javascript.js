@@ -1,10 +1,10 @@
 //Debug
-    //1.After setOperation has been run firstNum is stored causing the backspace button to not function
-    //  properly
-    //  ie. 45 + (backspace) 3 shows 4 + 3 but returns 48
+    //1. If the user presses an operator button (+) then a different one (-) the program will use firstNum 
+    //    as secondNum and calculate based on first operator input instead of just switching to last pressed operator
+    //2. When a result is displayed with no decimals, pressing a decimal should clear the result and start a 
+    //    new calculation instead of appending the digit to the existing result
 //Additions to create
-    //2. Add a backspace button\
-        //Add backspace button functionality\
+
     //3. Add keyboard support
 
 
@@ -19,6 +19,7 @@ let secondNum = null;
 let currentOperator = null;
 let shouldResetDisplay = false;
 let justCalculated = false;
+let operatorIsSet = false;
 
 const display = document.getElementById('display');
     display.textContent = "0"
@@ -29,7 +30,7 @@ const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', () => {
       const buttonValue = button.textContent;
-
+  
       if (button.id === 'backspace') {
         deleteLastChar();
         return;
@@ -47,6 +48,7 @@ buttons.forEach(button => {
 
       if (button.id === 'decimal') {
         document.getElementById('decimal').disabled = true;
+        operatorIsSet = false;
         handleDecimal();
         return;
       }
@@ -59,10 +61,14 @@ buttons.forEach(button => {
         return;
       }
 
-      if (button.classList.contains('numberButtons') && justCalculated === true) {
-        display.textContent = '0';
-        justCalculated = false;
-      return;
+      if (button.classList.contains('numberButtons')) {
+        if (justCalculated === true) {
+          display.textContent = '0';
+          justCalculated = false;
+        }
+        operatorIsSet = false;
+        updateDisplay(buttonValue);
+        return;  
       }
 
       updateDisplay(buttonValue);
@@ -86,6 +92,7 @@ function updateDisplay(value) {
     currentOperator = operator;
     shouldResetDisplay = true;
     document.getElementById('decimal').disabled = false;
+    operatorIsSet = true;
   }
 
   function calculateResult() {
@@ -129,9 +136,19 @@ function updateDisplay(value) {
     justCalculated = false;
   }
 
-  function deleteLastChar() {     //take current display, turn into array, return array minus the last index
-    const displayArray = Array.from(display.textContent);
-    displayArray.pop();
-    display.textContent = displayArray.join(""); //turn back into string
-  }
+  function deleteLastChar() {  
+    if (operatorIsSet) {
+      return;
+    }
 
+    const currentDisplay = display.textContent;
+    if (currentDisplay.length > 1) {
+      display.textContent = currentDisplay.slice (0, -1);
+    } else {
+      display.textContent = '0';
+    }
+
+    if (!display.textContent.includes('.')) {
+      document.getElementById('decimal').disabled = false;
+    }
+  }
