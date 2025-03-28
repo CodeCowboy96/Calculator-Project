@@ -1,13 +1,10 @@
 //Debug
-  //1. decimal functionality when starting secondNum with a decimal after first number has decimal\
-  //2. when hitting the decimal button after a firstNum with no decimal and an operator \
-  //    the decimal appends to end of firstNum\
-  
+    //1.After setOperation has been run firstNum is stored causing the backspace button to not function
+    //  properly
+    //  ie. 45 + (backspace) 3 shows 4 + 3 but returns 48
 //Additions to create
-    //1. Add a decimal button to allow for decimal operations\
-        //make sure only one decimal allowed at a time\
     //2. Add a backspace button\
-        //Add backspace button functionality
+        //Add backspace button functionality\
     //3. Add keyboard support
 
 
@@ -33,10 +30,9 @@ buttons.forEach(button => {
     button.addEventListener('click', () => {
       const buttonValue = button.textContent;
 
-      if (button.classList.contains('numberButtons') && justCalculated === true) {
-        display.textContent = '0';
-        justCalculated = false;
-      return;
+      if (button.id === 'backspace') {
+        deleteLastChar();
+        return;
       }
 
       if (button.id === 'clear') {
@@ -62,6 +58,13 @@ buttons.forEach(button => {
         setOperation(buttonValue);
         return;
       }
+
+      if (button.classList.contains('numberButtons') && justCalculated === true) {
+        display.textContent = '0';
+        justCalculated = false;
+      return;
+      }
+
       updateDisplay(buttonValue);
     });
 });
@@ -73,7 +76,7 @@ function updateDisplay(value) {
       display.textContent = value;
       shouldResetDisplay = false;
     }
-     else {
+    else {
       display.textContent += value;
     }
   };
@@ -124,5 +127,11 @@ function updateDisplay(value) {
       display.textContent += '.';
     }
     justCalculated = false;
+  }
+
+  function deleteLastChar() {     //take current display, turn into array, return array minus the last index
+    const displayArray = Array.from(display.textContent);
+    displayArray.pop();
+    display.textContent = displayArray.join(""); //turn back into string
   }
 
